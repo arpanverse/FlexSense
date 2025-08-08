@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Charts
 
 struct SessionScreen: View {
     let column: [GridItem] = [
@@ -34,8 +35,12 @@ struct SessionScreen: View {
                     .font(.system(size: 17, weight: .black))
                     .fontWidth(.expanded)
                 }
+                .padding(.bottom, 45)
                 //flex-graphs
-                
+                FlexGraph(position: "Upper", flexValue: 0.5, array: [], count: 0)
+                    .padding(.bottom, 30)
+                FlexGraph(position: "Lower", flexValue: 0.3, array: [], count: 0)
+                    .padding(.bottom, 21)
                 //phases-tab
                 VStack(alignment: .leading, spacing: 17) {
                     Text("Live Phases")
@@ -131,5 +136,39 @@ struct StatusTabView: View {
         .frame(height: 120, alignment: .bottom)
         .frame(maxWidth: .infinity)
         .background(.gray.opacity(0.1))
+    }
+}
+
+
+struct FlexGraph: View {
+    var position: String
+    var flexValue: Double
+    var array: [FlexPair]
+    var count: Int
+    var body: some View {
+        VStack(alignment: .leading, spacing: 3) {
+            HStack {
+                Text("\(position) Flex")
+                    .opacity(0.5)
+                Text("\(String(format: "%.1f", flexValue))º")
+            }
+            .font(.system(size: 17, weight: .black))
+            .fontWidth(.expanded)
+            .foregroundStyle(.black)
+            Chart {
+                ForEach(array) { pair in
+                    PointMark(x: .value("", String(pair.count)), y: .value("", pair.flex))
+                        .foregroundStyle(pair.flex > 0 ? .blue : .clear)
+                    LineMark(x: .value("", String(pair.count)), y: .value("", pair.flex))
+                        .foregroundStyle(.blue)
+                    AreaMark(x: .value("", String(pair.count)), y: .value("", pair.flex))
+                        .foregroundStyle(LinearGradient(colors: [.blue.opacity(0.3), .clear], startPoint: .top, endPoint: .bottom))
+                }
+            }
+            .chartXAxis(.hidden)
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .frame(width: 362)
+        .padding(.bottom)
     }
 }
