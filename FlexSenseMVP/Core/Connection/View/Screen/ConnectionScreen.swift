@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct ConnectionScreen: View {
-    @State var isPresented: Bool = true
+    @StateObject var manager = BLEManager.shared
+    @State var statusString: String = "Unavailable"
     var body: some View {
         NavigationStack {
             VStack(alignment: .leading, spacing: 12) {
@@ -21,11 +22,25 @@ struct ConnectionScreen: View {
                         .opacity(0.5)
                 }
                 HStack(spacing: 30) {
-                    Text("Connected")
-                        .font(.system(size: 15, weight: .bold))
-                        .fontWidth(.expanded)
-                    Image(systemName: "arrow.right")
-                        .fontWeight(.black)
+                    if manager.isDeviceFound {
+                        if manager.connectedPeripheral == nil {
+                            Text("Available")
+                                .font(.system(size: 15, weight: .bold))
+                                .fontWidth(.expanded)
+                        } else {
+                            Text("Connected")
+                                .font(.system(size: 15, weight: .bold))
+                                .fontWidth(.expanded)
+                        }
+                    } else {
+                        Text("Unavailable")
+                            .font(.system(size: 15, weight: .bold))
+                            .fontWidth(.expanded)
+                    }
+                    if manager.connectedPeripheral != nil {
+                        Image(systemName: "arrow.right")
+                            .fontWeight(.black)
+                    }
                 }
                 .padding()
                 .padding(.vertical, 4)
@@ -36,7 +51,7 @@ struct ConnectionScreen: View {
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.horizontal, 16)
             .padding(.bottom, 290)
-            .sheet(isPresented: $isPresented) {
+            .sheet(isPresented: $manager.isDeviceFound) {
                 ConnectionSheet()
                     .foregroundStyle(.background)
                     .presentationDetents([.fraction(0.29)])

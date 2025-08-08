@@ -8,22 +8,33 @@
 import SwiftUI
 
 struct ConnectionSheet: View {
+    @StateObject var manager = BLEManager.shared
     var body: some View {
         VStack(alignment: .leading, spacing: 17) {
             Text("FlexSense is \navailable nearby.")
                 .font(.system(size: 17, weight: .semibold))
                 .fontWidth(.expanded)
             .padding(.leading, 28)
-            Text("Connect")
-                .font(.system(size: 17, weight: .black))
-                .fontWidth(.expanded)
-                .padding()
-                .padding(.vertical, 2)
-                .frame(maxWidth: .infinity)
-                .foregroundStyle(.black)
-                .background(.background)
-                .padding()
-                .padding(.horizontal)
+            Button {
+                if manager.isDeviceFound {
+                    if let peripheral = manager.discoveredPeripherals.first {
+                        manager.connect(to: peripheral)
+                    }
+                    manager.stopScan()
+                    manager.isDeviceFound = false
+                }
+            } label: {
+                Text("Connect")
+                    .font(.system(size: 17, weight: .black))
+                    .fontWidth(.expanded)
+                    .padding()
+                    .padding(.vertical, 2)
+                    .frame(maxWidth: .infinity)
+                    .foregroundStyle(.black)
+                    .background(.background)
+                    .padding()
+                    .padding(.horizontal)
+            }
             
         }
         .padding(.top, 50)
