@@ -38,8 +38,13 @@ struct ConnectionScreen: View {
                             .fontWidth(.expanded)
                     }
                     if manager.connectedPeripheral != nil {
-                        Image(systemName: "arrow.right")
-                            .fontWeight(.black)
+                        NavigationLink {
+                            SessionScreen()
+                        } label: {
+                            Image(systemName: "arrow.right")
+                                .fontWeight(.black)
+                        }
+
                     }
                 }
                 .padding()
