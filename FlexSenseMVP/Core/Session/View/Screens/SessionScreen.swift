@@ -6,10 +6,18 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct SessionScreen: View {
+    @Query var users: [User]
+    @Environment(\.modelContext) var modelContext
     @StateObject var manager = BLEManager.shared
     @StateObject var vm = SessionViewModel.shared
+    
+    var user: User? {
+        users.last
+    }
+    
     let column: [GridItem] = [
         GridItem(.flexible(minimum: 100), spacing: 4),
         GridItem(.flexible(minimum: 100), spacing: 4),
@@ -97,6 +105,21 @@ struct SessionScreen: View {
                 .padding(.vertical, 28)
             }
             .padding(.horizontal)
+            .onAppear() {
+                if user == nil {
+                    modelContext.insert(User.defaultUser)
+                    do {
+                        try modelContext.save()
+                        print("New user created!")
+                    } catch {
+                        print("Err creating default user")
+                    }
+                } else {
+                    print("User found!")
+                    vm.userCriticalFlex1 = user?.upperFlex ?? 0
+                    vm.userCriticalFlex2 = user?.lowerFlex ?? 0
+                }
+            }
             .onChange(of: manager.latestSensorData) { _, _ in
                 vm.SplitString(manager.latestSensorData)
                 vm.calculateAcclScale()
