@@ -14,6 +14,12 @@ struct ConnectionScreen: View {
         NavigationStack {
             VStack(alignment: .leading, spacing: 12) {
                 VStack(alignment: .leading, spacing: 6) {
+                    Image(.logo)
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 60, height: 60)
+                        .clipped()
+                        .padding(.bottom, 4)
                     Text("FlexSense")
                         .font(.system(size: 32, weight: .black))
                         .fontWidth(.expanded)
@@ -44,7 +50,7 @@ struct ConnectionScreen: View {
                 .padding(.vertical, 4)
                 .foregroundStyle(.background)
                 .background(.primary)
-                .padding(.vertical, 30)
+                .padding(.top, 60)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.horizontal, 16)
