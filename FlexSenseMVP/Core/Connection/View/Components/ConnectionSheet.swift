@@ -21,7 +21,7 @@ struct ConnectionSheet: View {
                         manager.connect(to: peripheral)
                     }
                     manager.stopScan()
-                    manager.isDeviceFound = false
+                    manager.connectionSheetAppearance = false
                 }
             } label: {
                 Text("Connect")

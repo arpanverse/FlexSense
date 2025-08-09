@@ -22,18 +22,12 @@ struct ConnectionScreen: View {
                         .opacity(0.5)
                 }
                 HStack(spacing: 30) {
-                    if manager.isDeviceFound {
-                        if manager.connectedPeripheral == nil {
-                            Text("Available")
-                                .font(.system(size: 15, weight: .bold))
-                                .fontWidth(.expanded)
-                        } else {
-                            Text("Connected")
-                                .font(.system(size: 15, weight: .bold))
-                                .fontWidth(.expanded)
-                        }
+                    if manager.connectedPeripheral != nil {
+                        Text("Connected")
+                            .font(.system(size: 15, weight: .bold))
+                            .fontWidth(.expanded)
                     } else {
-                        Text("Unavailable")
+                        Text("Not Connected")
                             .font(.system(size: 15, weight: .bold))
                             .fontWidth(.expanded)
                     }
@@ -44,7 +38,6 @@ struct ConnectionScreen: View {
                             Image(systemName: "arrow.right")
                                 .fontWeight(.black)
                         }
-
                     }
                 }
                 .padding()
@@ -56,7 +49,7 @@ struct ConnectionScreen: View {
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.horizontal, 16)
             .padding(.bottom, 290)
-            .sheet(isPresented: $manager.isDeviceFound) {
+            .sheet(isPresented: $manager.connectionSheetAppearance) {
                 ConnectionSheet()
                     .foregroundStyle(.background)
                     .presentationDetents([.fraction(0.29)])

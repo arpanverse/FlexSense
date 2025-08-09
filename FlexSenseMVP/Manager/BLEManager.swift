@@ -18,6 +18,8 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate, CBPeriph
     @Published var discoveredPeripherals: [CBPeripheral] = []
     @Published var connectedPeripheral: CBPeripheral?
     
+    @Published var connectionSheetAppearance: Bool = false
+    
     @Published var latestSensorData: String = ""
     //latestSensorData = "UpperFlex,LowerFlex,R.Accel,Gx,Gy,Gz"
     
@@ -90,6 +92,7 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate, CBPeriph
                 if serviceUUIDs.contains(espServiceUUID) {
                     print("Matches NRf Service UUID")
                     isDeviceFound = true
+                    connectionSheetAppearance = true
                 }
             }
             DispatchQueue.main.async {
