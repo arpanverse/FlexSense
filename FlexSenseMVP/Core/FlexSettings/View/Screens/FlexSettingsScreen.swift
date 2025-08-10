@@ -49,7 +49,7 @@ struct FlexSettingsScreen: View {
                             .opacity(0.2)
                         Rectangle()
                             .foregroundStyle(.blue)
-                            .frame(width: 65, height: isUpperFlexUpdating ? vm.upperFlexHeight : vm.setUpperFlexHeight)
+                            .frame(width: 65, height: isUpperFlexUpdating ? (vm.upperFlexHeight * 5) : (vm.setUpperFlexHeight * 5))
                     }
                     Text("\(String(format: "%.1f", isUpperFlexUpdating ? vm.upperFlexHeight : vm.setUpperFlexHeight))º")
                         .font(.system(size: 17, weight: .black))
@@ -58,6 +58,14 @@ struct FlexSettingsScreen: View {
                         if isUpperFlexUpdating {
                             vm.finalizeUpperFlex()
                             isUpperFlexUpdating = false
+                            if let user = user {
+                                user.upperFlex = vm.setUpperFlexHeight
+                                do {
+                                    try modelContext.save()
+                                } catch {
+                                    print("Error saving user data: \(error)")
+                                }
+                            }
                         } else {
                             isUpperFlexUpdating = true
                         }
@@ -83,7 +91,7 @@ struct FlexSettingsScreen: View {
                             .opacity(0.2)
                         Rectangle()
                             .foregroundStyle(.cyan)
-                            .frame(width: 65, height: isLowerFlexUpdating ? vm.lowerFlexHeight : vm.setLowerFlexHeight)
+                            .frame(width: 65, height: isLowerFlexUpdating ? (vm.lowerFlexHeight * 5) : (vm.setLowerFlexHeight * 5))
                     }
                     Text("\(String(format: "%.1f", isLowerFlexUpdating ? vm.lowerFlexHeight : vm.setLowerFlexHeight))º")
                         .font(.system(size: 17, weight: .black))
@@ -92,6 +100,14 @@ struct FlexSettingsScreen: View {
                         if isLowerFlexUpdating {
                             vm.finalizeLowerFlex()
                             isLowerFlexUpdating = false
+                            if let user = user {
+                                user.lowerFlex = vm.setLowerFlexHeight
+                                do {
+                                    try modelContext.save()
+                                } catch {
+                                    print("Error saving user data: \(error)")
+                                }
+                            }
                         } else {
                             isLowerFlexUpdating = true
                         }

@@ -74,6 +74,8 @@ struct SessionScreen: View {
                             StatusTabView(status: "Up \nFlex", value: vm.readyUF)
                             StatusTabView(status: "Low Flex", value: vm.readyLF)
                             StatusTabView(status: "Critical", value: vm.readyCF)
+                                .foregroundStyle(.white)
+                                .background(.pink)
                             StatusTabView(status: "Accl", value: vm.readyACC)
                         }
                     }
@@ -86,6 +88,8 @@ struct SessionScreen: View {
                             StatusTabView(status: "Up \nFlex", value: vm.swingUF)
                             StatusTabView(status: "Low Flex", value: vm.swingLF)
                             StatusTabView(status: "Critical", value: vm.swingCF)
+                                .foregroundStyle(.white)
+                                .background(.pink)
                             StatusTabView(status: "Accl", value: vm.swingACC)
                         }
                     }
@@ -98,6 +102,8 @@ struct SessionScreen: View {
                             StatusTabView(status: "Up \nFlex", value: vm.followUF)
                             StatusTabView(status: "Low Flex", value: vm.followLF)
                             StatusTabView(status: "Critical", value: vm.followCF)
+                                .foregroundStyle(.white)
+                                .background(.pink)
                             StatusTabView(status: "Accl", value: vm.followACC)
                         }
                     }

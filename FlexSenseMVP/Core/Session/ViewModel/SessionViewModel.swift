@@ -80,9 +80,15 @@ class SessionViewModel: ObservableObject {
     }
     
     func getFlex() {
-        ScaledFlex1 = ((flex1Value - 100) * 0.225) - 4
+        ScaledFlex1 = ((flex1Value - 60) * 0.8)
+        if ScaledFlex1 < 0 {
+            ScaledFlex1 = 0
+        }
         pair1 = FlexPair(count: count, flex: ScaledFlex1)
-        ScaledFlex2 = ((flex2Value) * 0.225) - 7
+        ScaledFlex2 = ((flex2Value - 6) * 0.9) - 5
+        if ScaledFlex2 < 0 {
+            ScaledFlex2 = 0
+        }
         pair2 = FlexPair(count: count, flex: ScaledFlex2)
         flex1Array.append(pair1 ?? FlexPair(count: count, flex: 0))
         if flex1Array.count > 50 {
@@ -96,9 +102,9 @@ class SessionViewModel: ObservableObject {
     
     func extractActivePhase() {
         if accl > 1{
-            if gz > 300 && gz < 550 {
+            if gz > 200 && gz < 600 {
                 activePhase = "Follow through"
-            } else if gy > -300 && gy < -100 {
+            } else if gy > -500 && gy < -50 {
                 activePhase = "Ready"
             } else if gy > 100 && gy < 250 {
                 activePhase = "Swing"
@@ -116,7 +122,7 @@ class SessionViewModel: ObservableObject {
         readyLF = LFSummation / Double(analyticReadyCount)
         readyUF = UFSummation / Double(analyticReadyCount)
         readyACC = ACCSummation / Double(analyticReadyCount)
-        if (flex1Value > userCriticalFlex1 || flex2Value > userCriticalFlex2) {
+        if (ScaledFlex1 > userCriticalFlex1 || ScaledFlex2 > userCriticalFlex2) {
             readyCF += 1
         }
     }
@@ -129,7 +135,7 @@ class SessionViewModel: ObservableObject {
         swingLF = LFSummation / Double(analyticSwingCount)
         swingUF = UFSummation / Double(analyticSwingCount)
         swingACC = ACCSummation / Double(analyticSwingCount)
-        if (flex1Value > userCriticalFlex1 || flex2Value > userCriticalFlex2) {
+        if (ScaledFlex1 > userCriticalFlex1 || ScaledFlex2 > userCriticalFlex2) {
             swingCF += 1
         }
     }
@@ -142,7 +148,7 @@ class SessionViewModel: ObservableObject {
         followLF = LFSummation / Double(analyticFollowCount)
         followUF = UFSummation / Double(analyticFollowCount)
         followACC = ACCSummation / Double(analyticFollowCount)
-        if (flex1Value > userCriticalFlex1 || flex2Value > userCriticalFlex2) {
+        if (ScaledFlex1 > userCriticalFlex1 || ScaledFlex2 > userCriticalFlex2) {
             followCF += 1
         }
     }

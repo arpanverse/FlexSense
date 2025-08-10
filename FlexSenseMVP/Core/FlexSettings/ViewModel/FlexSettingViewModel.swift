@@ -18,20 +18,36 @@ class FlexSettingViewModel: ObservableObject {
     
     func SetUpUpperFlex(_ data: String) {
         let flex1Value = Double(data.split(separator: ",")[0]) ?? 0
-        upperFlexHeight = ((flex1Value - 100) * 0.225) - 4
+        let value = ((flex1Value - 60) * 0.8)
+        if value < 0 {
+            upperFlexHeight = 0
+        } else {
+            upperFlexHeight = value
+        }
     }
     
     func SetUpLowerFlex(_ data: String) {
         let flex2Value = Double(data.split(separator: ",")[1]) ?? 0
-        lowerFlexHeight = ((flex2Value) * 0.225) - 7
+        let value = ((flex2Value - 6) * 0.9) - 5
+        if value < 0 {
+            lowerFlexHeight = 0
+        } else {
+            lowerFlexHeight = value
+        }
     }
     
     func finalizeUpperFlex() {
         setUpperFlexHeight = upperFlexHeight
+        if setUpperFlexHeight < 0 {
+            setUpperFlexHeight = 0
+        }
     }
     
     func finalizeLowerFlex() {
         setLowerFlexHeight = lowerFlexHeight
+        if setLowerFlexHeight < 0 {
+            setLowerFlexHeight = 0
+        }
     }
 }
     
