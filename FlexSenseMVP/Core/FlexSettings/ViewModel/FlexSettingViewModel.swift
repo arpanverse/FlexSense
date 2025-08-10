@@ -18,7 +18,7 @@ class FlexSettingViewModel: ObservableObject {
     
     func SetUpUpperFlex(_ data: String) {
         let flex1Value = Double(data.split(separator: ",")[0]) ?? 0
-        let value = ((flex1Value - 60) * 0.8)
+        let value = ((flex1Value - 30) * 1.2)
         if value < 0 {
             upperFlexHeight = 0
         } else {

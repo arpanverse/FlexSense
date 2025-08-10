@@ -80,7 +80,7 @@ class SessionViewModel: ObservableObject {
     }
     
     func getFlex() {
-        ScaledFlex1 = ((flex1Value - 60) * 0.8)
+        ScaledFlex1 = ((flex1Value - 30) * 1.2)
         if ScaledFlex1 < 0 {
             ScaledFlex1 = 0
         }
