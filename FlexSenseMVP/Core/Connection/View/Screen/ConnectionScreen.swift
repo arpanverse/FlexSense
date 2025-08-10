@@ -12,7 +12,7 @@ struct ConnectionScreen: View {
     @State var statusString: String = "Unavailable"
     var body: some View {
         NavigationStack {
-            VStack(alignment: .leading, spacing: 12) {
+            VStack(alignment: .leading, spacing: 4) {
                 VStack(alignment: .leading, spacing: 6) {
                     Image(.logo)
                         .resizable()
@@ -51,6 +51,20 @@ struct ConnectionScreen: View {
                 .foregroundStyle(.background)
                 .background(.primary)
                 .padding(.top, 60)
+                if manager.connectedPeripheral != nil {
+                    NavigationLink {
+                        FlexSettingsScreen()
+                    } label: {
+                        Text("FLex Settings")
+                            .font(.system(size: 15, weight: .bold))
+                            .fontWidth(.expanded)
+                            .padding()
+                            .padding(.vertical, 4)
+                            .foregroundStyle(.background)
+                            .background(.blue)
+                    }
+
+                }
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.horizontal, 16)
